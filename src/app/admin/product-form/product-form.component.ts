@@ -15,7 +15,7 @@ export class ProductFormComponent {
   
 
   categories$;
-  product = {};
+  product = {} as Product;
   id;
   subscription: Subscription;
   isNew: boolean;
