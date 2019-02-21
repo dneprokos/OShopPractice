@@ -26,7 +26,7 @@ export class ProductFormComponent {
     private router: Router,
     private route: ActivatedRoute) 
   {
-    this.categories$ = categoryService.getCategories().valueChanges()
+    this.categories$ = categoryService.getAll().valueChanges()
     .pipe(
       map(arr => Object.entries(arr.shift()))
     )

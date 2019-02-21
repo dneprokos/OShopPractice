@@ -10,7 +10,7 @@ export class CategoryService {
 
   constructor(private db: AngularFirestore, private altDb: AngularFireDatabase) { }
 
-  getCategories(): AngularFirestoreCollection<Category> {
+  getAll(): AngularFirestoreCollection<Category> {
     return this.db.collection("/categories/");
   }
 
