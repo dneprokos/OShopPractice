@@ -18,8 +18,6 @@ export class UserService {
   constructor(private db: AngularFirestore, private altDb: AngularFireDatabase) {
     //Get users collection
     this.users = this.db.collection<AppUser>('users');
-
-
   }
 
   save(user: firebase.User){
