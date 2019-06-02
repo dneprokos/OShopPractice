@@ -12,16 +12,12 @@ import { ShoppingCartItem } from './models/shopping-cart-item';
   providedIn: 'root'
 })
 export class ShoppingCartService {
+  
   carts: AngularFirestoreCollection<firebase.firestore.DocumentData>;
 
   constructor(private db: AngularFirestore) {
     this.carts = this.db.collection('/shopping-carts/');
   }
-
-  private create(){
-    return this.carts.add({ dateCreated: new Date().getTime() });
-  }
-
 
   async getCart(): Promise<Observable<ShoppingCart>> {
     let cartId = await this.getOrCreateCartId();
@@ -36,15 +32,6 @@ export class ShoppingCartService {
     );
   }
 
-  private async getOrCreateCartId(): Promise<string> {
-    let cartId = localStorage.getItem('cartId');
-    if (cartId) return cartId;
-
-    let result = await this.create();      
-    localStorage.setItem('cartId', result.id);
-    return result.id;
-  }
-
   async addToCart(product: Product){
     let cartId = await this.getOrCreateCartId();
     const cartDocument: AngularFirestoreDocument<any> = await this.carts.doc(cartId);
@@ -52,21 +39,15 @@ export class ShoppingCartService {
      cartDocument.get().toPromise().catch().then(val => {
       let data = val.data() as ShoppingCart;
 
-      if (data.items != undefined && data.items[product.uid] != undefined) {
-        let field = 'items.' + product.uid + ".quantity";
-        let currentQuantity = data.items[product.uid].quantity; 
-        let updateQuantity = { [field]: currentQuantity + 1 };
-        
-        cartDocument.update(updateQuantity);        
+      //Update products quantity
+      if (data.items[product.uid]) {
+        this.updateProductQuantity(product, data, cartDocument, +1);        
       }
-      else if (data.items != undefined && data.items[product.uid] == undefined) {
+      //Add new product to cart
+      else if (data.items[product.uid] == undefined) {
         let field = 'items.' + product.uid;
-        let addNewProductToCart = {[field]: {product: product, quantity: 1 }};
+        let addNewProductToCart = this.newProductObject(product, field);
         cartDocument.update(addNewProductToCart);
-      }
-      else if (data.items == undefined ) {
-        const addNewProduct = { items: { [product.uid]: {product: product, quantity: 1 }}};
-        cartDocument.update(addNewProduct);
       }
      });
   }
@@ -79,11 +60,7 @@ export class ShoppingCartService {
       let data = val.data() as ShoppingCart;
 
       if (data.items[product.uid].quantity > 1) {
-        let field = 'items.' + product.uid + ".quantity";
-        let currentQuantity = data.items[product.uid].quantity; 
-        let updateQuantity = { [field]: currentQuantity - 1 };
-        
-        cartDocument.update(updateQuantity);        
+        this.updateProductQuantity(product, data, cartDocument, -1);       
       }
       else if (data.items[product.uid].quantity === 1) {
         let field2 = 'items.' + product.uid;
@@ -91,4 +68,46 @@ export class ShoppingCartService {
       }
      });
   }
+
+  async clearCart() {
+    let cartId = await this.getOrCreateCartId();
+    const cartDocument: AngularFirestoreDocument<any>  = await this.carts.doc(cartId);
+    cartDocument.update({ items: {} });
+  }
+
+  private async getOrCreateCartId(): Promise<string> {
+    let cartId = localStorage.getItem('cartId');
+    if (cartId) return cartId;
+
+    let result = await this.create();      
+    localStorage.setItem('cartId', result.id);
+    return result.id;
+  }
+
+  private create(){
+    return this.carts.add({ 
+      dateCreated: new Date().getTime(), 
+      items: {}
+    });
+  }
+
+  private updateProductQuantity(product: Product, data: ShoppingCart, document: AngularFirestoreDocument<any>, value: number){
+    let field = 'items.' + product.uid + ".quantity";
+        let currentQuantity = data.items[product.uid].quantity; 
+        let updateQuantity = { [field]: currentQuantity + value };
+        
+        document.update(updateQuantity);
+  }
+
+  private newProductObject(product: Product, fieldName: string){
+    return {
+      [fieldName]: {
+        title: product.title,
+        imageUrl:product.imageUrl,
+        price: product.price,
+        quantity: 1 
+      }};
+  }
+
+  
 }

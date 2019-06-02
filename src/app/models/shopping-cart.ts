@@ -4,9 +4,10 @@ import { Product } from './product';
 export class ShoppingCart {
     itemsArray: ShoppingCartItem[] = []
     constructor(public items: { [productId: string]: ShoppingCartItem }) {
+        this.items = this.items || {};
         for(let productId in items){
             let item = items[productId];
-            this.itemsArray.push(new ShoppingCartItem(item.product, item.quantity));
+            this.itemsArray.push(new ShoppingCartItem({...item, uid: productId }));
         }           
     }
 
