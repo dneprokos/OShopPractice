@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentData } from '@angular/fire/firestore';
-import { map} from 'rxjs/operators';
+import { map, take} from 'rxjs/operators';
 import { Product } from './models/product';
 import { firestore } from 'firebase';
 import { Observable } from 'rxjs';
@@ -23,11 +23,17 @@ export class ShoppingCartService {
   }
 
 
-  async getCart() {
+  async getCart(): Promise<Observable<ShoppingCart>> {
     let cartId = await this.getOrCreateCartId();
     return this.db.doc('/shopping-carts/' + cartId)
     .valueChanges()
-    .pipe(map(object => object ));
+    .pipe(
+      map(object => {
+        let shoppingCart = object as ShoppingCart;
+        return new ShoppingCart(shoppingCart.items);
+      }
+      )
+    );
   }
 
   private async getOrCreateCartId(): Promise<string> {

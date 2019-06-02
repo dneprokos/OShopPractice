@@ -1,13 +1,16 @@
 import { ShoppingCartItem } from './shopping-cart-item';
 
 export class ShoppingCart {
-    items: { [key: string]: ShoppingCartItem };
+    constructor(public items: { [productId: string]: ShoppingCartItem }) {
+        for(let productId in items){
+            let item = items[productId];
+        }           
+    }   
 
-    get totalProductsCount(){
+    get totalItemsCount(){
         let count = 0;
-        for(let productId in this.items){
+        for(let productId in this.items)
             count +=this.items[productId].quantity;
-        }
         return count;
     }
 }
