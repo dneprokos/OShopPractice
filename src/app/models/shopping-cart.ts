@@ -1,4 +1,5 @@
 import { ShoppingCartItem } from './shopping-cart-item';
+import { Product } from './product';
 
 export class ShoppingCart {
     itemsArray: ShoppingCartItem[] = []
@@ -7,6 +8,11 @@ export class ShoppingCart {
             let item = items[productId];
             this.itemsArray.push(new ShoppingCartItem(item.product, item.quantity));
         }           
+    }
+
+    getQuantity(product: Product) {    
+        let item = this.items[product.uid];
+        return item ? item.quantity: 0;
     }
     
     get totalPrice(){
