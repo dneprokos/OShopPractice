@@ -36,6 +36,8 @@ import { ProductService } from './product.service';
 import { DataTableModule } from 'angular-6-datatable';
 import { ProductFilterComponent } from './products/product-filter/product-filter.component';
 import { ProductCardComponent } from './product-card/product-card.component';
+import { ShoppingCartService } from './shopping-cart.service';
+import { ProductQuantityComponent } from './product-quantity/product-quantity.component';
 
 
 @NgModule({
@@ -54,6 +56,7 @@ import { ProductCardComponent } from './product-card/product-card.component';
     ProductFormComponent,
     ProductFilterComponent,
     ProductCardComponent,
+    ProductQuantityComponent,
   ],
   imports: [
     BrowserModule,
@@ -118,7 +121,8 @@ import { ProductCardComponent } from './product-card/product-card.component';
     UserService,
     CategoryService,
     AdminAuthGuardService,
-    ProductService
+    ProductService,
+    ShoppingCartService
   ],
   bootstrap: [AppComponent]
 })
