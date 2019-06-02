@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ShoppingCartService } from '../shopping-cart.service';
 import { Observable } from 'rxjs';
+import { ShoppingCart } from '../models/shopping-cart';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -16,16 +17,18 @@ export class ShoppingCartComponent implements OnInit {
 
   async ngOnInit() {
     this.cart$ = await this.shoppingCartService.getCart();
-
+    
     this.cart$.subscribe(cart => {
+      let shoppingCart = cart as ShoppingCart;
       this.shoppingCartItemsCount = 0;
-      for(let productId in cart.items){
-       this.shoppingCartItemsCount += cart.items[productId].quantity;
+      for(let productId in shoppingCart.items){
+       this.shoppingCartItemsCount += shoppingCart.items[productId].quantity;
       }
     });
 
     this.cart$.subscribe(cart => {
-      this.productIds = Object.keys(cart.items);
+      let shoppingCart = cart as ShoppingCart;
+      this.productIds = Object.keys(shoppingCart.items);
     })
   }
 

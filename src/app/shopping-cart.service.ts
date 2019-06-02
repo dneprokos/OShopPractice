@@ -5,6 +5,7 @@ import { Product } from './models/product';
 import { firestore } from 'firebase';
 import { Observable } from 'rxjs';
 import { ShoppingCart } from './models/shopping-cart';
+import { ShoppingCartItem } from './models/shopping-cart-item';
 
 
 @Injectable({
@@ -29,20 +30,6 @@ export class ShoppingCartService {
     .pipe(map(object => object ));
   }
 
-/*
- async getCart(): Promise<firestore.DocumentData>  {
-  let cartId = await this.getOrCreateCartId();
-  return this.db.doc('/shopping-carts/' + cartId)
-  .get()
-  .toPromise()
-  .catch()
-  .then(cart => {
-    console.log(cart.data());
-    return cart.data();
-  } );
-}
-*/
-
   private async getOrCreateCartId(): Promise<string> {
     let cartId = localStorage.getItem('cartId');
     if (cartId) return cartId;
@@ -54,10 +41,10 @@ export class ShoppingCartService {
 
   async addToCart(product: Product){
     let cartId = await this.getOrCreateCartId();
-    const cartDocument: AngularFirestoreDocument<any>  = await this.carts.doc(cartId);
+    const cartDocument: AngularFirestoreDocument<any> = await this.carts.doc(cartId);
 
      cartDocument.get().toPromise().catch().then(val => {
-      let data = val.data();
+      let data = val.data() as ShoppingCart;
 
       if (data.items != undefined && data.items[product.uid] != undefined) {
         let field = 'items.' + product.uid + ".quantity";
@@ -83,7 +70,7 @@ export class ShoppingCartService {
     const cartDocument: AngularFirestoreDocument<any>  = await this.carts.doc(cartId);
 
     cartDocument.get().toPromise().catch().then(val => {
-      let data = val.data();
+      let data = val.data() as ShoppingCart;
 
       if (data.items[product.uid].quantity > 1) {
         let field = 'items.' + product.uid + ".quantity";
@@ -97,14 +84,5 @@ export class ShoppingCartService {
         cartDocument.update({ [field2]: firestore.FieldValue.delete() })
       }
      });
-  }
-
-  async getProductIdsFromCart(): Promise<string[]> {
-    let ids: string[];
-    let cartId = await this.getOrCreateCartId();
-    const cartDocument: AngularFirestoreDocument<any>  = await this.carts.doc(cartId);
-    cartDocument.get().toPromise().then(v => ids = Object.keys(v.data().items));
-
-    return ids;
   }
 }

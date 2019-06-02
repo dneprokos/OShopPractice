@@ -19,7 +19,7 @@ export class ProductCardComponent {
   }
 
   removeFromCart() {
-    this.cartService.removeFromCart(this.product);
+     this.cartService.removeFromCart(this.product);
   }
 
   getQuantity() {
