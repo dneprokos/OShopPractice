@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router/src/utils/preactivation';
 import { AuthService } from './auth.service';
-import { map, switchMap, flatMap, first } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { UserService } from './user.service';
-import { Observable, observable } from 'rxjs';
-import { auth } from 'firebase';
-
+import { Observable } from 'rxjs';
 
 
 @Injectable({
