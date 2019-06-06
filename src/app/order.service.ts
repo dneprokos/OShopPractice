@@ -23,13 +23,8 @@ export class OrderService {
     //TODO: Review how to make it with help of transaction. It will be much save implementation.
   }
 
-  getOrdersByUser(userId: string) {
+  getOrdersByUser(userId: string): Promise<Order []> {
     return this.orders.ref.where('userId', '==', userId)
-    .get()
-    .then(q => q.docs.map(v => {
-      let order = v.data() as Order;
-      return order;
-    }));
-       
+    .get().then(q => q.docs.map(v => v.data() as Order));      
   }
 }
