@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection, DocumentData } from '@angular/fire/firestore';
 import { Order } from './models/order';
 import { ShoppingCartService } from './shopping-cart.service';
+import { from, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,5 +21,15 @@ export class OrderService {
     return result;
 
     //TODO: Review how to make it with help of transaction. It will be much save implementation.
+  }
+
+  getOrdersByUser(userId: string) {
+    return this.orders.ref.where('userId', '==', userId)
+    .get()
+    .then(q => q.docs.map(v => {
+      let order = v.data() as Order;
+      return order;
+    }));
+       
   }
 }
