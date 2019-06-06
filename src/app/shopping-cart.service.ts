@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentData } from '@angular/fire/firestore';
-import { map, take} from 'rxjs/operators';
+import { map} from 'rxjs/operators';
 import { Product } from './models/product';
 import { firestore } from 'firebase';
 import { Observable } from 'rxjs';
 import { ShoppingCart } from './models/shopping-cart';
-import { ShoppingCartItem } from './models/shopping-cart-item';
 
 
 @Injectable({
