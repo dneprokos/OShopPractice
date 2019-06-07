@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { CategoryService } from 'src/app/category.service';
+import { CategoryService } from 'src/app/shared/services/category.service';
 import { map } from 'rxjs/operators';
-import { ProductService } from 'src/app/product.service';
+import { ProductService } from 'src/app/shared/services/product.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Product } from 'src/app/models/product';
+import { Product } from 'src/app/shared/models/product';
 import { Subscription } from 'rxjs';
 
 @Component({

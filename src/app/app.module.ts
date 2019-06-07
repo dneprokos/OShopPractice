@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { CustomFormsModule } from 'ng2-validation';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatComponentsModule } from "./mat-components.module";
+import { MatComponentsModule } from "./shared/angular-material/mat-components.module";
 
 
 import { AngularFireModule } from '@angular/fire';
@@ -25,20 +25,20 @@ import { RouterModule } from '@angular/router';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { LoginComponent } from './login/login.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { AuthService } from './auth.service';
-import { AuthGuardService as AuthGuard } from './auth-guard.service';
-import { UserService } from './user.service';
+import { AuthService } from './shared/services/auth.service';
+import { AuthGuardService as AuthGuard } from './shared/services/auth-guard.service';
+import { UserService } from './shared/services/user.service';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { AdminAuthGuardService } from './admin-auth-guard.service';
+import { AdminAuthGuardService } from './shared/services/admin-auth-guard.service';
 import { ProductFormComponent } from './admin/product-form/product-form.component';
-import { CategoryService } from './category.service';
-import { ProductService } from './product.service';
+import { CategoryService } from './shared/services/category.service';
+import { ProductService } from './shared/services/product.service';
 import { DataTableModule } from 'angular-6-datatable';
 import { ProductFilterComponent } from './products/product-filter/product-filter.component';
 import { ProductCardComponent } from './product-card/product-card.component';
-import { ShoppingCartService } from './shopping-cart.service';
+import { ShoppingCartService } from './shared/services/shopping-cart.service';
 import { ProductQuantityComponent } from './product-quantity/product-quantity.component';
-import { OrderService } from './order.service';
+import { OrderService } from './shared/services/order.service';
 import { ShoppingCartSummaryComponent } from './shopping-cart-summary/shopping-cart-summary.component';
 import { ShippingFormComponent } from './shipping-form/shipping-form.component';
 

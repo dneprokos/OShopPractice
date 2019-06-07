@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, DocumentData } from '@angular/fire/firestore';
-import { Order } from './models/order';
+import { Order } from '../models/order';
 import { ShoppingCartService } from './shopping-cart.service';
 import { from, Observable } from 'rxjs';
 
