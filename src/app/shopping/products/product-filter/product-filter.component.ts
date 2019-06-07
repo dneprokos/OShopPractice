@@ -10,6 +10,7 @@ import { map } from 'rxjs/operators';
 export class ProductFilterComponent {
   categories$;
   @Input('category') category;
+  
 
   constructor(private categoryService: CategoryService,) {
     this.categories$ = categoryService.getAll().valueChanges()
