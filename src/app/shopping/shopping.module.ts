@@ -26,8 +26,6 @@ import { SharedModule } from '../shared/shared.module';
     ShippingFormComponent,
   ],
   imports: [
-    CommonModule,
-    FormsModule,
     SharedModule,
     RouterModule.forChild([
       { path: 'products', component: ProductsComponent },

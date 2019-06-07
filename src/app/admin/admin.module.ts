@@ -18,11 +18,7 @@ import { AdminAuthGuardService } from './services/admin-auth-guard.service';
     ProductFormComponent
   ],
   imports: [
-    CommonModule,
-    FormsModule,
-    MatComponentsModule,
     SharedModule,
-    DataTableModule,
     RouterModule.forChild([
       //Admin users only
       { 

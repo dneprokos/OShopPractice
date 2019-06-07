@@ -11,6 +11,14 @@ import { ProductService } from './services/product.service';
 import { ShoppingCartService } from './services/shopping-cart.service';
 import { UserService } from './services/user.service';
 import { MatComponentsModule } from './angular-material/mat-components.module';
+import { FormsModule } from '@angular/forms';
+import { DataTableModule } from 'angular-6-datatable';
+import { CustomFormsModule } from 'ng2-validation';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -19,11 +27,29 @@ import { MatComponentsModule } from './angular-material/mat-components.module';
   ],
   exports: [
     ProductCardComponent,
-    ProductQuantityComponent
+    ProductQuantityComponent,
+    CommonModule,
+    MatComponentsModule,
+    FormsModule,
+    DataTableModule,
+    CustomFormsModule,
+    BrowserAnimationsModule,
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
+    AngularFirestoreModule,   
+    NgbModule.forRoot().ngModule, 
   ],
   imports: [
     CommonModule,
-    MatComponentsModule
+    MatComponentsModule,
+    FormsModule,
+    DataTableModule,
+    CustomFormsModule,
+    BrowserAnimationsModule,
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
+    AngularFirestoreModule,   
+    NgbModule.forRoot(),  
   ],
   providers: [
     AuthService,
