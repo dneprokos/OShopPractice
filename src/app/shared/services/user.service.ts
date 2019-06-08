@@ -24,7 +24,7 @@ export class UserService {
       name: user.displayName,
       email: user.email
     }, { merge: true })
-    .then(() =>console.log('user saved successfully'))
+    //.then(() =>console.log('user saved successfully'))
     .catch((reason: any) => console.log('user save failed:', reason));  
   }
 
